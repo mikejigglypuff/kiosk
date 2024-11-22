@@ -1,10 +1,10 @@
-package level4;
+package level5;
 
 import java.util.List;
 
 public class Menu {
-    public List<MenuItem> menuItems;
-    public String category;
+    private final List<MenuItem> menuItems;
+    private final String category;
 
     public Menu(List<MenuItem> menuItems, String category) {
         this.menuItems = menuItems;
