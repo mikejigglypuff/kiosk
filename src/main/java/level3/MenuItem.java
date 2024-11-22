@@ -1,9 +1,9 @@
 package level3;
 
 public class MenuItem {
-    private final String name;
-    private double price = -1;
-    private final String description;
+    public final String name;
+    public double price = -1;
+    public final String description;
 
     public MenuItem(String name, double price, String description) {
         this.name = name;

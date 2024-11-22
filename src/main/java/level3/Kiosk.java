@@ -5,13 +5,13 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Kiosk {
-    private final List<MenuItem> menuItems;
+    public final List<MenuItem> menuItems;
 
     public Kiosk(List<MenuItem> menuItems) {
         this.menuItems = menuItems;
     }
 
-    private void displayMenu() {
+    public void displayMenu() {
         int menuAmount = menuItems.size();
         StringBuilder sb = new StringBuilder();
         for(int i = 1, count = 0; count < menuAmount; i = (i + 1) % menuAmount, ++count) {
