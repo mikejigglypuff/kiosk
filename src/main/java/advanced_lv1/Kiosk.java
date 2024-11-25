@@ -18,6 +18,8 @@
 
 package advanced_lv1;
 
+import advanced_lv2.enums.Discount;
+
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;

@@ -1,7 +1,10 @@
 package advanced_lv2;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Basket {
     private final List<MenuItem> menuItems = new ArrayList<>();
@@ -10,7 +13,7 @@ public class Basket {
     public void addItem(MenuItem item) {
         menuItems.add(item);
         ++itemNumber;
-        System.out.println(item.getName() + " 이(가) 장바구니에 추가되었습니다.");
+        System.out.println( item.getName()+ " 이(가) 장바구니에 추가되었습니다.");
     }
 
     public void clearItem() {
@@ -18,28 +21,24 @@ public class Basket {
         itemNumber = 0;
     }
 
-    public int getItemNumber() {
-        return itemNumber;
+    public int getItemNumber() { return itemNumber; }
+
+    public double getPriceSum(double discount) {
+        return menuItems.stream()
+            .mapToDouble(MenuItem::getPrice)
+            .map(val -> val * 1000 * (1 - discount))
+            .sum() / 1000;
     }
 
     public double getPriceSum() {
-        double result = 0d;
-
-        for (MenuItem item : menuItems) {
-            result += item.getPrice() * 10;
-        }
-
-        return result / 10;
+        return menuItems.stream()
+            .mapToDouble(MenuItem::getPrice)
+            .sum();
     }
 
     public String getItemDescriptions() {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("[ ORDERS ]\n");
-        for (MenuItem item : menuItems) {
-            sb.append(item.toString()).append("\n");
-        }
-
-        return sb.toString();
+        return menuItems.stream()
+            .map(MenuItem::toString)
+            .collect(Collectors.joining("\n"));
     }
 }

@@ -1,6 +1,8 @@
 package advanced_lv2;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 public class Menu {
     private final List<MenuItem> menuItems;
@@ -16,20 +18,19 @@ public class Menu {
     }
 
     public MenuItem getItem(int n) throws IndexOutOfBoundsException {
-        if (n < 0 || n >= menuItems.size())
+        if(n < 0 || n >= menuItems.size())
             throw new IndexOutOfBoundsException("0 ~ " + menuItems.size() + " 사이의 수를 입력하세요.");
         return menuItems.get(n);
     }
 
-    public String summarizeMenu() {
-        int menuAmount = menuItems.size();
-        StringBuilder sb = new StringBuilder();
-        sb.append("[ ").append(category).append(" MENU ]\n");
-        for (int i = 0; i < menuAmount; i++) {
-            sb.append(i + 1).append(". ").append(menuItems.get(i).toString()).append("\n");
-        }
-        sb.append("0. 뒤로가기\n");
+    public int getMenuAmount() { return menuItems.size(); }
 
-        return sb.toString();
+    public String summarizeMenu() {
+        AtomicInteger index = new AtomicInteger(1);
+
+        return menuItems.stream()
+            .map(MenuItem::toString)
+            .map(val -> String.format("%d. %s", index.getAndIncrement(), val))
+            .collect(Collectors.joining("\n"));
     }
 }

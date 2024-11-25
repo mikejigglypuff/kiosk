@@ -14,10 +14,7 @@ public class MenuItem {
     public String getName() {
         return name;
     }
-
-    public double getPrice() {
-        return price;
-    }
+    public double getPrice() { return price; }
 
     @Override
     public String toString() {
