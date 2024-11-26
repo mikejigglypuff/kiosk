@@ -1,37 +1,30 @@
 /*
-    1. 사용자 유형별 할인율 적용하기
-        1-1. Enum으로 유형별 할인율 정의할 것
-        1-2. 주문 시 할인율이 적용되도록 할 것
-
-    2. 람다 & 스트림 활용
-        2-1. 카테고리 별 메뉴 출력 시 활용할 것
-        2-2. 장바구니 물건 출력 시 활용할 것
 
  */
 
-package advanced_lv2;
+package advanced_final;
 
-import advanced_lv2.enums.Discount;
+import advanced_final.enums.Discount;
+import advanced_final.enums.MenuType;
 
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Kiosk {
-    private final List<Menu> menus;
+    private final Map<MenuType, List<MenuItem>> menus;
     private final Basket basket = new Basket();
 
-    public Kiosk(List<Menu> menus) {
-        this.menus = menus;
-    }
+    public Kiosk(Map<MenuType, List<MenuItem>> menus){this.menus = menus;}
 
     private void displayMenus() {
         int menuAmount = menus.size();
         StringBuilder sb = new StringBuilder();
 
         sb.append("[ MAIN MENU ]\n");
-        for (int i = 0; i < menuAmount; i++) {
-            sb.append(i + 1).append(". ").append(menus.get(i).getCategory()).append("\n");
+        for(MenuType m : menus.keySet()) {
+            sb.append(m.getIndex() + 1).append(". ").append(m.getTypeName()).append("\n");
         }
         sb.append("0. 종료      | 종료\n");
 
@@ -40,6 +33,18 @@ public class Kiosk {
                 .append(". Orders\n").append(menuAmount + 2).append(". Cancel\n");
         }
         System.out.print(sb);
+    }
+
+    private void displayMenu(List<MenuItem> list) {
+        StringBuilder sb = new StringBuilder();
+
+        int index = 1;
+        for(MenuItem item : list) {
+            sb.append(index++).append(". ").append(item.toString()).append("\n");
+        }
+        sb.append("0. 뒤로가기");
+
+        System.out.println(sb);
     }
 
     public void start(Scanner sc) {
@@ -81,18 +86,19 @@ public class Kiosk {
                     continue;
                 }
 
-                int menu;
+                int menu, size;
                 while (true) {
-                    Menu curMenu = menus.get(category);
-                    System.out.print(curMenu.summarizeMenu() + "\n0. 뒤로가기\n");
+                    List<MenuItem> curMenu = menus.get(MenuType.of(category));
+                    size = curMenu.size();
+                    displayMenu(curMenu);
 
                     menu = sc.nextInt() - 1;
 
                     if (menu == -1) break;
-                    else if(menu < -1 || menu > curMenu.getMenuAmount())
-                        throw new IndexOutOfBoundsException("0 ~ " + curMenu.getMenuAmount() + " 사이의 수를 입력하세요.");
+                    else if(menu < -1 || menu > size)
+                        throw new IndexOutOfBoundsException("0 ~ " + size + " 사이의 수를 입력하세요.");
 
-                    MenuItem menuItem = curMenu.getItem(menu);
+                    MenuItem menuItem = curMenu.get(menu);
                     System.out.println(menuItem.toString() + "\n위 메뉴를 장바구니에 추가하시겠습니까?\n1.확인     2. 취소");
                     if (sc.nextInt() == 1) {
                         basket.addItem(menuItem);
