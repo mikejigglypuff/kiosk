@@ -21,6 +21,8 @@ public class Basket {
 
     public int getItemNumber() { return itemNumber; }
 
+    public List<MenuItem> getMenuItems() { return menuItems; }
+
     public double getPriceSum(double discount) {
         return menuItems.stream()
             .mapToDouble(MenuItem::getPrice)

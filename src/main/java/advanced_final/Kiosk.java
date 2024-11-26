@@ -14,11 +14,55 @@ import java.util.Scanner;
 
 public class Kiosk {
     private final Map<MenuType, List<MenuItem>> menus;
-    private final Basket basket = new Basket();
+    private final Basket basket;
+    private final Scanner sc = new Scanner(System.in);
 
-    public Kiosk(Map<MenuType, List<MenuItem>> menus){this.menus = menus;}
+    public Kiosk(Map<MenuType, List<MenuItem>> menus){
+        this.basket = new Basket();
+        this.menus = menus;
+    }
 
-    private void displayMenus() {
+    public Kiosk(Basket basket, Map<MenuType, List<MenuItem>> menus) {
+        this.basket = basket;
+        this.menus = menus;
+    }
+
+    public void confirmOrder() {
+        System.out.println("아래와 같이 주문하시겠습니까?\n"
+            + basket.getItemDescriptions() + "\n[ TOTAL ]\nW " + basket.getPriceSum()
+            + "\n\n 1. 주문       2. 메뉴판");
+
+        if (sc.nextInt() == 1) {
+            System.out.println("할인 정보를 입력해주세요.\n" + Discount.getDiscountList());
+
+            System.out.println(
+                "주문이 완료되었습니다. 금액은 W "
+                    + basket.getPriceSum(Discount.findDiscountRate(sc.nextInt())) + " 입니다.");
+            basket.clearItem();
+        }
+    }
+
+    public void deleteOrder() {
+        System.out.println("주문을 취소하시겠습니까?\n1. 예         2. 아니오");
+        if (sc.nextInt() == 1) {
+            System.out.println("주문이 정상적으로 취소되었습니다.");
+            basket.clearItem();
+        }
+    }
+
+    public void displayMenu(List<MenuItem> list) {
+        StringBuilder sb = new StringBuilder();
+
+        int index = 1;
+        for(MenuItem item : list) {
+            sb.append(index++).append(". ").append(item.toString()).append("\n");
+        }
+        sb.append("0. 뒤로가기");
+
+        System.out.println(sb);
+    }
+
+    public void displayMenus() {
         int menuAmount = menus.size();
         StringBuilder sb = new StringBuilder();
 
@@ -35,25 +79,12 @@ public class Kiosk {
         System.out.print(sb);
     }
 
-    private void displayMenu(List<MenuItem> list) {
-        StringBuilder sb = new StringBuilder();
-
-        int index = 1;
-        for(MenuItem item : list) {
-            sb.append(index++).append(". ").append(item.toString()).append("\n");
-        }
-        sb.append("0. 뒤로가기");
-
-        System.out.println(sb);
-    }
-
-    public void start(Scanner sc) {
+    public void start() {
         int category, menuAmount = menus.size();
         while (true) {
             try {
                 displayMenus();
                 category = sc.nextInt() - 1;
-
 
                 if(basket.getItemNumber() == 0 && category >= menuAmount)
                     throw new IndexOutOfBoundsException("0 ~ " + menuAmount + " 사이의 수를 입력하세요.");
@@ -63,26 +94,10 @@ public class Kiosk {
                     System.out.println("프로그램을 종료합니다.");
                     return;
                 } else if (category == menuAmount) {
-                    System.out.println("아래와 같이 주문하시겠습니까?\n"
-                        + basket.getItemDescriptions() + "\n[ TOTAL ]\nW " + basket.getPriceSum()
-                        + "\n\n 1. 주문       2. 메뉴판");
-
-                    if (sc.nextInt() == 1) {
-                        System.out.println("할인 정보를 입력해주세요.\n" + Discount.getDiscountList());
-
-                        System.out.println(
-                            "주문이 완료되었습니다. 금액은 W "
-                                + basket.getPriceSum(Discount.findDiscountRate(sc.nextInt())) + " 입니다.");
-                        basket.clearItem();
-                    }
+                    confirmOrder();
                     continue;
                 } else if (category == menuAmount + 1) {
-                    System.out.println("주문을 취소하시겠습니까?\n1. 예         2. 아니오");
-                    if (sc.nextInt() == 1) {
-                        System.out.println("주문이 정상적으로 취소되었습니다.");
-                        basket.clearItem();
-                    }
-
+                    deleteOrder();
                     continue;
                 }
 
