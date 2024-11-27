@@ -7,6 +7,7 @@ package advanced_final;
 import advanced_final.enums.Discount;
 import advanced_final.enums.MenuType;
 
+import java.io.ByteArrayInputStream;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +23,7 @@ public class Kiosk {
         this.menus = menus;
     }
 
-    public Kiosk(Basket basket, Map<MenuType, List<MenuItem>> menus) {
+    public Kiosk(Map<MenuType, List<MenuItem>> menus, Basket basket) {
         this.basket = basket;
         this.menus = menus;
     }
@@ -115,9 +116,7 @@ public class Kiosk {
 
                     MenuItem menuItem = curMenu.get(menu);
                     System.out.println(menuItem.toString() + "\n위 메뉴를 장바구니에 추가하시겠습니까?\n1.확인     2. 취소");
-                    if (sc.nextInt() == 1) {
-                        basket.addItem(menuItem);
-                    }
+                    if (sc.nextInt() == 1) basket.addItem(menuItem);
                 }
             } catch (InputMismatchException e) {
                 System.out.println("잘못된 입력입니다.");

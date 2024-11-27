@@ -75,6 +75,7 @@ public class BasketTest {
             basket.addItem(i);
             sb.append(i.toString()).append("\n");
         }
+        sb.deleteCharAt(sb.length() - 1);
 
         assertEquals(sb.toString(), basket.getItemDescriptions());
     }
