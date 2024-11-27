@@ -1,6 +1,6 @@
 import advanced_final.MenuItem;
 import advanced_final.enums.MenuType;
-import advanced_final.enums.SellingMenu;
+import advanced_final.enums.Menu;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -19,10 +19,10 @@ public class SellingMenuTest {
             comp.put(m, list);
         }
 
-        for(SellingMenu s : SellingMenu.values()) {
+        for(Menu s : Menu.values()) {
             comp.get(s.getType()).add(s.getMenuItem());
         }
 
-        assertEquals(comp, SellingMenu.getMenuList());
+        assertEquals(comp, Menu.getMenuList());
     }
 }

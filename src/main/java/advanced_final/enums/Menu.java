@@ -4,7 +4,7 @@ import advanced_final.MenuItem;
 
 import java.util.*;
 
-public enum SellingMenu {
+public enum Menu {
     SHACKBURGER(MenuType.BURGERS, "ShackBurger", 6.9,
         "토마토, 양상추, 쉑소스가 토핑된 치즈버거", true),
     SMOKEBURGER(MenuType.BURGERS, "SmokeShack", 8.9,
@@ -34,19 +34,20 @@ public enum SellingMenu {
     private final MenuType type;
     private final MenuItem menuItem;
 
-    SellingMenu(MenuType type, String menuName, double price, String description, boolean recommandation) {
+    Menu(MenuType type, String menuName, double price, String description, boolean recommandation) {
         this.type = type;
         this.menuItem = new MenuItem(menuName, price, description, recommandation);
     }
 
+    // Getter
     public MenuType getType() {
         return type;
     }
-
     public MenuItem getMenuItem() {
         return menuItem;
     }
 
+    // 메뉴 리스트들을 Kiosk 에서 사용하기 좋은 형태로 반환
     public static Map<MenuType, List<MenuItem>> getMenuList() {
         Map<MenuType, List<MenuItem>> categoryMap = new LinkedHashMap<>();
         for(MenuType m : MenuType.values()) {
@@ -54,7 +55,7 @@ public enum SellingMenu {
             categoryMap.put(m, list);
         }
 
-        for(SellingMenu s : SellingMenu.values()) {
+        for(Menu s : Menu.values()) {
             categoryMap.get(s.getType()).add(s.getMenuItem());
         }
 

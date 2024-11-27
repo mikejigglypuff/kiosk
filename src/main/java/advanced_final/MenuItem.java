@@ -21,6 +21,7 @@ public class MenuItem {
 
 
     @Override
+    // recommandation 활용하면 recommandation 추가할 것
     public String toString() {
         return name + "\t| " + "W " + price + "\t| " + description;
     }
@@ -28,6 +29,7 @@ public class MenuItem {
     @Override
     public boolean equals(Object o) {
         if(o instanceof MenuItem m) {
+            // recommandation을 활용하게 되면 toString()에 맞춰 바꿀 것
             return (this.toString().equals(m.toString()) && this.recommandation == m.isRecommandation());
         }
         return false;

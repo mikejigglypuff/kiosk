@@ -13,6 +13,7 @@ public enum MenuType {
         this.TypeName = categoryName;
     }
 
+    // Getter
     public int getIndex() {
         return index;
     }

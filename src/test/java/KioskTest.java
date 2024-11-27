@@ -3,7 +3,7 @@ import advanced_final.Kiosk;
 import advanced_final.MenuItem;
 import advanced_final.enums.Discount;
 import advanced_final.enums.MenuType;
-import advanced_final.enums.SellingMenu;
+import advanced_final.enums.Menu;
 import org.junit.jupiter.api.*;
 
 import java.io.*;
@@ -21,7 +21,7 @@ public class KioskTest {
     private static Kiosk kiosk;
     private static Basket basket;
     private static Basket emptyBasket;
-    private static final Map<MenuType, List<MenuItem>> menus = SellingMenu.getMenuList();
+    private static final Map<MenuType, List<MenuItem>> menus = Menu.getMenuList();
 
     @BeforeAll
     public static void setInputs() {

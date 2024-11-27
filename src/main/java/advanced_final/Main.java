@@ -1,15 +1,10 @@
 package advanced_final;
 
-import advanced_final.enums.SellingMenu;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import advanced_final.enums.Menu;
 
 public class Main {
     public static void main(String[] args) {
-        Kiosk kiosk = new Kiosk(SellingMenu.getMenuList());
+        Kiosk kiosk = new Kiosk(Menu.getMenuList());
         kiosk.start();
     }
 }

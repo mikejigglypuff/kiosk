@@ -1,13 +1,8 @@
-/*
-
- */
-
 package advanced_final;
 
 import advanced_final.enums.Discount;
 import advanced_final.enums.MenuType;
 
-import java.io.ByteArrayInputStream;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +23,7 @@ public class Kiosk {
         this.menus = menus;
     }
 
+    // 장바구니에 담긴 메뉴들 주문 처리
     public void confirmOrder() {
         System.out.println("아래와 같이 주문하시겠습니까?\n"
             + basket.getItemDescriptions() + "\n[ TOTAL ]\nW " + basket.getPriceSum()
@@ -43,6 +39,7 @@ public class Kiosk {
         }
     }
 
+    // 주문 취소 처리
     public void deleteOrder() {
         System.out.println("주문을 취소하시겠습니까?\n1. 예         2. 아니오");
         if (sc.nextInt() == 1) {
@@ -51,6 +48,7 @@ public class Kiosk {
         }
     }
 
+    // MenuType 별 상세 메뉴 출력
     public void displayMenu(List<MenuItem> list) {
         StringBuilder sb = new StringBuilder();
 
@@ -63,6 +61,7 @@ public class Kiosk {
         System.out.println(sb);
     }
 
+    // MenuType 및 장바구니 메뉴 출력
     public void displayMenus() {
         int menuAmount = menus.size();
         StringBuilder sb = new StringBuilder();
@@ -87,6 +86,7 @@ public class Kiosk {
                 displayMenus();
                 category = sc.nextInt() - 1;
 
+                // 입력 예외처리
                 if(basket.getItemNumber() == 0 && category >= menuAmount)
                     throw new IndexOutOfBoundsException("0 ~ " + menuAmount + " 사이의 수를 입력하세요.");
                 else if (category < -1 || category >= menuAmount + 2)
