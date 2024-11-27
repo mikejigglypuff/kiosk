@@ -52,9 +52,9 @@ public class Kiosk {
     public void displayMenu(List<MenuItem> list) {
         StringBuilder sb = new StringBuilder();
 
-        int index = 1;
+        int count = 1;
         for(MenuItem item : list) {
-            sb.append(index++).append(". ").append(item.toString()).append("\n");
+            sb.append(count++).append(". ").append(item.toString()).append("\n");
         }
         sb.append("0. 뒤로가기");
 

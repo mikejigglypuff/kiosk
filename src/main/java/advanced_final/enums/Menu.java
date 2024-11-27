@@ -13,6 +13,7 @@ public enum Menu {
         "포테이토 번과 비프패티, 치즈가 토핑된 치즈버거", false),
     HAMBURGER(MenuType.BURGERS,"Hamburger", 5.4,
         "비프패티를 기반으로 야채가 들어간 기본버거", false),
+
     LEMONADE(MenuType.DRINK, "Lemonade", 4.5,
         "매장에서 직접 만드는 상큼한 레몬에이드", false),
     FIFTY(MenuType.DRINK, "Fifty", 4.0,
@@ -21,6 +22,7 @@ public enum Menu {
         "코카콜라, 코카콜라 제로, 스프라이트, 환타 오렌지, 환타 그레이프, 환타 파인애플", false),
     ROOTBEER(MenuType.DRINK, "Abita Root Beer", 5.0,
         "청량감 있는 독특한 미국식 무알콜 탄산음료", false),
+
     COOKIECREAMSHAKE(MenuType.DESSERT, "Vanilla Cookie & Cream Shake", 7.8,
         "부드러운 바닐라 커스터드와 바삭한 쿠키 크럼블이 어우러진 홀리데이 쉐이크", false),
     CUPCONES(MenuType.DESSERT, "Cup & Cones", 5.7,
@@ -29,7 +31,9 @@ public enum Menu {
         "진한 초콜릿 커스터드에 퍼지 소스와 세 가지 초콜릿 토핑이 블렌딩된 쉐이크쉑의 대표 콘크리트", false),
     SHACKFFOGATO(MenuType.DESSERT, "Shack-ffogato", 6.2,
         "바닐라 커스터드에 커피 카라멜 소스, 초콜릿 토피, 초콜릿 청크, 코코아 파우더가 어우러진 쉐이크쉑만의 아포가토 콘크리트",
-        false);
+        false),
+    HANDSPUNSHAKE(MenuType.DESSERT, "Classic Hand-Spun Shakes", 6.8,
+        "쫀득하고 진한 커스터드가 들어간 클래식 쉐이크(바닐라/초콜릿/스트로베리/블랙 & 화이트/솔티드 카라멜/피넛 버터/커피)", true);
 
     private final MenuType type;
     private final MenuItem menuItem;
@@ -50,13 +54,21 @@ public enum Menu {
     // 메뉴 리스트들을 Kiosk 에서 사용하기 좋은 형태로 반환
     public static Map<MenuType, List<MenuItem>> getMenuList() {
         Map<MenuType, List<MenuItem>> categoryMap = new LinkedHashMap<>();
+        Map<MenuType, Integer> indexMap = new HashMap<>();
         for(MenuType m : MenuType.values()) {
             List<MenuItem> list = new ArrayList<>();
             categoryMap.put(m, list);
+            indexMap.put(m, 0);
         }
 
         for(Menu s : Menu.values()) {
-            categoryMap.get(s.getType()).add(s.getMenuItem());
+            MenuType type = s.getType();
+            if(s.getMenuItem().isRecommandation()) {
+                int index = indexMap.get(type);
+                categoryMap.get(type).add(index, s.getMenuItem());
+                indexMap.put(type, ++index);
+            }
+            else categoryMap.get(type).add(s.getMenuItem());
         }
 
         return categoryMap;
