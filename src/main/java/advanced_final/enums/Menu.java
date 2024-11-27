@@ -33,7 +33,8 @@ public enum Menu {
         "바닐라 커스터드에 커피 카라멜 소스, 초콜릿 토피, 초콜릿 청크, 코코아 파우더가 어우러진 쉐이크쉑만의 아포가토 콘크리트",
         false),
     HANDSPUNSHAKE(MenuType.DESSERT, "Classic Hand-Spun Shakes", 6.8,
-        "쫀득하고 진한 커스터드가 들어간 클래식 쉐이크(바닐라/초콜릿/스트로베리/블랙 & 화이트/솔티드 카라멜/피넛 버터/커피)", true);
+        "쫀득하고 진한 커스터드가 들어간 클래식 쉐이크(바닐라/초콜릿/스트로베리/블랙 & 화이트/솔티드 카라멜/피넛 버터/커피)",
+        true);
 
     private final MenuType type;
     private final MenuItem menuItem;
